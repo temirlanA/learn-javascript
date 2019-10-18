@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>test</title>
+    </script>
+</head>
+
+<body>
+    <input type="submit" value="button" id="button"> </div>
+</body>
+<script>
+    var button = document.getElementById('button');
+
+    button.onclick =async function() 
+    {
+        let iin = 'my iin'
+        let url = 'http://operationRest/clientIin/'+iin;
+        let response = await fetch(url,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'Authorization':'Basic '+btoa('login:password')
+                }
+            });
+
+        if (response.ok)
+        {
+            let val = '';
+            let text = await response.text();
+            JSON.parse(text,(key, value) =>{
+                if (key === 'fullName'){
+                    val = value;
+                }
+            });
+            let arrayFullName = val.split(' ');
+            alert(arrayFullName[0]);
+        }
+        else 
+        {
+            alert('Ошибка HTTP: ' + response.status);
+        }
+    }
+</script>
+
+</html>
